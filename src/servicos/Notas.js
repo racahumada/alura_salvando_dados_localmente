@@ -40,6 +40,20 @@ export const buscaNotas = async () => {
   });
 };
 
+export const buscaNotasPorCategoria = async (categoria) => {
+  return new Promise((resolve) => {
+    db.transaction((transaction) => {
+      transaction.executeSql(
+        "SELECT * FROM Notas WHERE categoria = ?;",
+        [categoria],
+        (transaction, resultado) => {
+          resolve(resultado.rows._array);
+        }
+      );
+    });
+  });
+};
+
 export const atualizaNota = async (nota) => {
   return new Promise((resolve) => {
     db.transaction((transaction) => {
